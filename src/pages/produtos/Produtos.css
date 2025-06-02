@@ -1,56 +1,99 @@
+.produtos-wrapper {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.produtos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.botao-carrinho {
+  padding: 10px 20px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.botao-carrinho:hover {
+  background-color: #e05a00;
+}
+
 .produtos-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.5rem;
-    padding: 2rem;
-    background-color: #f9f9f9;
-  }
-  
-  .produto-card {
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .produto-card:hover {
-    transform: scale(1.03);
-  }
-  
-  .produto-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-  }
-  
-  .produto-card h3 {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    color: #333;
-    height: 3.5em;
-    overflow: hidden;
-  }
-  
-  .preco {
-    font-weight: bold;
-    color: #ff6600;
-    margin: 0.5rem 0;
-  }
-  
-  .produto-card button {
-    background-color: #ff6600;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .produto-card button:hover {
-    background-color: #e65500;
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.produto-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.produto-card:hover {
+  transform: translateY(-4px);
+}
+
+.produto-card img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.produto-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.preco {
+  font-weight: bold;
+  color: #ff6600;
+  margin-bottom: 1rem;
+}
+
+.botao-comprar {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.botao-comprar:hover {
+  background-color: #e05a00;
+}
+
+.logout-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #999;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 999;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #777;
+}
+

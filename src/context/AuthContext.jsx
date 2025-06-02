@@ -1,20 +1,21 @@
-import { createContext, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [usuario, setUsuario] = useState(null);
-  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState(() => {
+    const usuarioSalvo = localStorage.getItem("usuario");
+    return usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
+  });
 
-  const login = (email) => {
-    setUsuario({ email });
-    navigate("/produtos");
+  const login = (dados) => {
+    setUsuario(dados);
+    localStorage.setItem("usuario", JSON.stringify(dados));
   };
 
   const logout = () => {
     setUsuario(null);
-    navigate("/login");
+    localStorage.removeItem("usuario");
   };
 
   return (
@@ -24,6 +25,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext);

@@ -1,60 +1,47 @@
-import React from "react";
 import { useCarrinho } from "../../context/CarrinhoContext";
-import "./index.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import "./Carrinho.css";
 
 export default function Carrinho() {
-  const { itens, alterarQuantidade, total } = useCarrinho();
+  const { itens, alterarQuantidade, removerDoCarrinho, limparCarrinho, total } = useCarrinho();
+  const navigate = useNavigate();
+  const [mensagem, setMensagem] = useState("");
+
+  const finalizarCompra = () => {
+    setMensagem("Compra realizada com sucesso!");
+    setTimeout(() => {
+      limparCarrinho();
+      navigate("/produtos");
+    }, 2000);
+  };
 
   return (
-    <div className="container">
-      <div className="carrinho">
-        <div className="carrinho-header">
-          <p>Seu carrinho tem <strong>{itens.length} itens</strong></p>
-        </div>
-
-        <div className="carrinho-center">
-          {itens.length === 0 ? (
-            <p style={{ color: "#fff", padding: "2rem" }}>Seu carrinho está vazio.</p>
-          ) : (
-            itens.map((item) => (
-              <div className="carrinho-items" key={item.id}>
-                <div className="carrinho-items-img">
-                  <img src={item.imagem} alt={item.nome} />
-                </div>
-                <div className="carrinho-items-info">
-                  <p className="nome-produto">{item.nome}</p>
-                  <div className="carrinho-items-info-valor">
-                    <p><b>R$ {item.valor.toFixed(2)}</b></p>
-                    <div className="carrinho-items-info-quantidade">
-                      <button
-                        className="carrinho-items-info-quantidade-1"
-                        onClick={() => alterarQuantidade(item.id, -1)}
-                      >
-                        -
-                      </button>
-                      <p><b>{item.quantidade}</b></p>
-                      <button
-                        className="carrinho-items-info-quantidade-2"
-                        onClick={() => alterarQuantidade(item.id, 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
+    <div className="carrinho-container">
+      <h2>Meu Carrinho</h2>
+      {itens.length === 0 ? (
+        <p>Carrinho vazio.</p>
+      ) : (
+        <>
+          {itens.map((item) => (
+            <div className="item-carrinho" key={item.id}>
+              <img src={item.imagem} alt={item.nome} width={80} />
+              <div className="info">
+                <h4>{item.nome}</h4>
+                <p>R$ {item.valor.toFixed(2)} x {item.quantidade}</p>
               </div>
-            ))
-          )}
-        </div>
-
-        <div className="carrinho-footer">
-          <div className="carrinho-footer-total">
-            <p>Total:</p>
-            <p className="valor-total"><b>R$ {total.toFixed(2)}</b></p>
-          </div>
-          <button className="carrinho-footer-finalizar">Finalizar Compra</button>
-        </div>
-      </div>
+              <div className="acoes">
+                <button onClick={() => alterarQuantidade(item.id, 1)}>+</button>
+                <button onClick={() => alterarQuantidade(item.id, -1)}>-</button>
+                <button onClick={() => removerDoCarrinho(item.id)}>Remover</button>
+              </div>
+            </div>
+          ))}
+          <div className="total-carrinho">Total: R$ {total.toFixed(2)}</div>
+          <button className="finalizar-btn" onClick={finalizarCompra}>Finalizar Compra</button>
+          {mensagem && <div className="mensagem-compra">{mensagem}</div>}
+        </>
+      )}
     </div>
   );
 }

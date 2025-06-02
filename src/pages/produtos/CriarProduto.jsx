@@ -1,24 +1,26 @@
 import { useState } from "react";
-import { useProduto } from "../../context/ProdutoContext";
 import { useNavigate } from "react-router-dom";
+import "./CriarProduto.css";
 
 export default function CriarProduto() {
-  const { criarProduto } = useProduto();
-  const navigate = useNavigate();
   const [form, setForm] = useState({ nome: "", valor: "", imagem: "" });
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    criarProduto({ ...form, valor: parseFloat(form.valor) });
+    await fetch("http://localhost:3000/produtos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...form, valor: parseFloat(form.valor) }),
+    });
     navigate("/produtos");
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className="form-container">
       <h2>Criar Produto</h2>
       <form onSubmit={handleSubmit}>
         <input name="nome" placeholder="Nome" onChange={handleChange} required />
